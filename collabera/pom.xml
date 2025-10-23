@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.my</groupId>
-	<artifactId>aeoncredit</artifactId>
+	<artifactId>collabera</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>aeoncredit</name>
+	<name>collabera</name>
 	<description>Assessment project for Spring Boot</description>
 	<url/>
 	<licenses>
