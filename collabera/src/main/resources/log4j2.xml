@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Configuration status="WARN" monitorInterval="30">
+    <Properties>
+        <Property name="LOG_PATTERN">%d{yyyy-MM-dd'T'HH:mm:ss.SSSZ} %p %m%n</Property>
+        <Property name="APP_LOG_ROOT">logs/</Property>
+        <Property name="LOG_FILE_NAME">collabera</Property>
+    </Properties>
+
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+        </Console>
+        <RollingFile name="collaberaLog"
+                     fileName="${APP_LOG_ROOT}/${LOG_FILE_NAME}.log"
+                     filePattern="${APP_LOG_ROOT}/${LOG_FILE_NAME}-%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10MB" />
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+            </Policies>
+            <DefaultRolloverStrategy max="30" fileIndex="min" compressionLevel="9">
+                <Delete basePath="${APP_LOG_ROOT}" maxDepth="1">
+                    <IfLastModified age="30d" />
+                    <IfFilename glob="*.log.gz" />
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+        <Async name="AsyncConsole">
+            <AppenderRef ref="Console" />
+        </Async>
+        <Async name="AsyncRollingFile">
+            <AppenderRef ref="collaberaLog" />
+        </Async>
+    </Appenders>
+    <Loggers>
+        <Logger name="com.my.collabera" additivity="false">
+            <AppenderRef ref="AsyncRollingFile" />
+        </Logger>
+        <Root level="INFO">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="AsyncRollingFile" />
+        </Root>
+    </Loggers>
+</Configuration>
