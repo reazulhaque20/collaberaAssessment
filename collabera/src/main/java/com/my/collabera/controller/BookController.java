@@ -27,14 +27,35 @@ public class BookController {
     @Operation(summary = "Register a new book")
     public ResponseEntity<BookResponse> registerBook(
             @Valid @RequestBody BookRequest request) {
-        log.info("Register a book: {}", request);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(bookService.registerBook(request));
+        log.info("Starting book registration process for request: {}", request);
+
+        try {
+            log.debug("Validating book request: {}", request);
+            BookResponse response = bookService.registerBook(request);
+            log.info("Book registered successfully with ID: {}, Title: {}",
+                    response.getId(), response.getTitle());
+            log.debug("Complete book registration response: {}", response);
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        } catch (Exception e) {
+            log.error("Failed to register book. Request: {}, Error: {}", request, e.getMessage(), e);
+            throw e;
+        }
     }
 
     @GetMapping
     @Operation(summary = "Get all books")
     public ResponseEntity<List<BookResponse>> getAllBooks() {
-        return ResponseEntity.ok(bookService.getAllBooks());
+        log.info("GET /api/books - Retrieving all books");
+        try {
+            List<BookResponse> books = bookService.getAllBooks();
+            log.info("Successfully retrieved {} books", books.size());
+            if (log.isDebugEnabled()) {
+                log.debug("Retrieved books: {}", books);
+            }
+            return ResponseEntity.ok(books);
+        } catch (Exception e) {
+            log.error("Failed to retrieve books: {}", e.getMessage(), e);
+            throw e;
+        }
     }
 }
