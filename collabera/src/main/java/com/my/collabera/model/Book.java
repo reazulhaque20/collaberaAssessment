@@ -1,15 +1,15 @@
 package com.my.collabera.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "books")
-@Data
+@Getter
+@Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Book {
