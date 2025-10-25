@@ -52,7 +52,7 @@ mvn jacoco:report
 5. **Build, Release, Run**: Maven build, Docker image, container run
 6. **Processes**: Stateless (no session state)
 7. **Port Binding**: Self-contained with embedded Tomcat
-8. **Concurrency**: Horizontal scaling via Kubernetes
+8. **Concurrency**: 
 9. **Disposability**: Fast startup, graceful shutdown
 10. **Dev/Prod Parity**: Same stack (H2 vs PostgreSQL only difference)
 11. **Logs**: Stdout streaming (captured by container runtime)
